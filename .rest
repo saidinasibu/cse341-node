@@ -9,11 +9,11 @@ POST http://localhost:5500/contacts HTTP/1.1
 Content-Type: application/json
 
 {
-  "firstName": "Stuart",
-  "lastName": "Zagadou",
-  "email": "dagbamefranck02@gmail.com",
+  "firstName": "Nasibu",
+  "lastName": "Saidi",
+  "email": "adjinasibusaidi@gmail.com",
   "favoriteColor": "Green",
-  "birthday": "May 20"
+  "birthday": "December 27"
 }
 
 ### Update a contact
@@ -21,11 +21,11 @@ PUT http://localhost:5500/contacts/68276cb04b300996f11cc6c7 HTTP/1.1
 Content-Type: application/json
 
 {
-  "firstName": "Stephano",
-  "lastName": "Campos",
+  "firstName": "Christine",
+  "lastName": "Kamen",
   "email": "unknown",
-  "favoriteColor": "Black",
-  "birthday": "May 05"
+  "favoriteColor": "Red",
+  "birthday": "April 15"
 }
 
 ### Delete a contact
