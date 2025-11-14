@@ -5,18 +5,18 @@ const { MongoClient } = require('mongodb');
 const dotenv = require('dotenv');
 
 // ------------------------------
-// ⚙️ CONFIGURATION ENVIRONNEMENT
+// ⚙️ LOAD ENVIRONMENT VARIABLES
 // ------------------------------
 dotenv.config();
 
 // ------------------------------
-// 🔌 VARIABLES
+// 🔌 DATABASE CLIENT
 // ------------------------------
+const uri = process.env.MONGO_URI;
 let _db;
-const uri = process.env.MONGO_URI; // ⚠️ doit correspondre au nom dans ton .env
 
 // ------------------------------
-// 🚀 INITIALISATION DE LA CONNEXION
+// 🚀 INITIALIZE DATABASE
 // ------------------------------
 const initDb = async (callback) => {
   if (_db) {
@@ -25,15 +25,15 @@ const initDb = async (callback) => {
   }
 
   if (!uri) {
-    return callback(new Error("❌ MONGO_URI is undefined. Vérifie ton fichier .env!"));
+    return callback(new Error("❌ MONGO_URI is missing in .env file!"));
   }
 
   try {
-    const client = await MongoClient.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    _db = client.db(); // Tu peux mettre "contactsdb" ici si tu veux explicitement
+    const client = new MongoClient(uri); // ✅ No options needed in MongoDB v7
+    await client.connect();
+
+    _db = client.db(); // Uses default DB from connection string
+
     console.log("✅ MongoDB connected successfully!");
     callback(null, _db);
   } catch (err) {
@@ -43,7 +43,7 @@ const initDb = async (callback) => {
 };
 
 // ------------------------------
-// 📤 OBTENIR LA BASE DE DONNÉES
+// 📤 GET DATABASE
 // ------------------------------
 const getDatabase = () => {
   if (!_db) throw Error("❌ Database not initialized yet!");
